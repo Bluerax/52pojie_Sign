@@ -3,7 +3,8 @@ name: "吾爱破解签到"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 10,18  * * *"
+    # 每天国际时间 12:40 运行一次, 中国时间 20:40
+    - cron: '40 12 * * *'
   watch:
     types: [started]
 
