@@ -54,8 +54,9 @@ def sign(cookie):
     return result 
 
 def main():
-    b = os.environ['POJIE']
+    b = os.environ['PojieCookie']
     cookie = b
+    token = os.environ['PushToken']
     sign_msg = sign(cookie=cookie)
     print(sign_msg)
 
