@@ -16,7 +16,7 @@ async def main():
     await page.goto("https://www.52pojie.cn/home.php?mod=task&do=apply&id=2")
 
     # 设置cookies
-    cookies_list = os.environ['52PjCookie']
+    cookies_list = os.environ['PjCookie']
     for cookie in cookies_list:
         # 添加cookies
         await page.setCookie(cookie)
