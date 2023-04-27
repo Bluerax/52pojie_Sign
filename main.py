@@ -10,10 +10,12 @@ from bs4 import BeautifulSoup
 async def main():
     # 启动无头浏览器
     browser = await pyppeteer.launch(headless=True)
+    print("1")
     page = await browser.newPage()
 
     # 52签到页
     await page.goto("https://www.52pojie.cn/home.php?mod=task&do=apply&id=2")
+    print("2")
 
     # 设置cookies
     cookies_list = os.environ['PjCookie']
