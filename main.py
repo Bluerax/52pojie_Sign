@@ -25,6 +25,7 @@ async def main():
     await page.reload()
     await asyncio.sleep(2)
     content = await page.content()
+    print(content)
  
     # 获取签到结果并推送
     result, fc = check(content)
