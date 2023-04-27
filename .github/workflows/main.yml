@@ -18,14 +18,19 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: '3.11'
+      - name: 缓存 Chromium
+        uses: actions/cache@v2
+        with:
+          path: ${{ runner.cacheDirectory }}/.local/share/pyppeteer/local-chromium/
+          key: ${{ runner.os }}-chromium
       - name: '安装依赖包'
         run: |
           python -m pip install --upgrade requests
           pip install beautifulsoup4
           pip install pyppeteer
-          sudo snap install chromium
       - name: '开始签到'
         env:
+          PYPPETEER_EXECUTABLE_PATH: ${{ runner.toolcache }}/Cache Chromium/linux/chrome-90.0.4430.85/chrome
           52PjCookie: ${{ secrets.PjCookie }}
           PushToken: ${{ secrets.PushToken }}
           
