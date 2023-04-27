@@ -6,38 +6,40 @@ import requests
 import pyppeteer
 import json
 from bs4 import BeautifulSoup
+from pyppeteer import chromium_downloader
 
 async def main():
-    # 启动无头浏览器
-    await pyppeteer.chromium_downloader.download_chromium()
-    browser = await pyppeteer.launch(headless=True)
-    
-    page = await browser.newPage()
+    async with chromium_downloader() as downloader:
+        # 启动无头浏览器
+        await downloader.download_chromium()
+        browser = await pyppeteer.launch(headless=True,executablePath=downloader.cdnUrl)
 
-    # 52签到页
-    await page.goto("https://www.52pojie.cn/home.php?mod=task&do=apply&id=2")
-    
+        page = await browser.newPage()
 
-    # 设置cookies
-    cookies_list = os.environ['PjCookie']
-    for cookie in cookies_list:
-        # 添加cookies
-        await page.setCookie(cookie)
+        # 52签到页
+        await page.goto("https://www.52pojie.cn/home.php?mod=task&do=apply&id=2")
 
-    # 刷新页面
-    await page.reload()
-    await asyncio.sleep(2)
-    content = await page.content()
-    
- 
-    # 获取签到结果并推送
-    result, fc = check(content)
-    
-    token = os.environ['PushToken']
-    pushplus_push(token= token, title=result, content=fc, topic='')
 
-    # 关闭浏览器
-    await browser.close()
+        # 设置cookies
+        cookies_list = os.environ['PjCookie']
+        for cookie in cookies_list:
+            # 添加cookies
+            await page.setCookie(cookie)
+
+        # 刷新页面
+        await page.reload()
+        await asyncio.sleep(2)
+        content = await page.content()
+
+
+        # 获取签到结果并推送
+        result, fc = check(content)
+
+        token = os.environ['PushToken']
+        pushplus_push(token= token, title=result, content=fc, topic='')
+
+        # 关闭浏览器
+        await browser.close()
 
 def check(content):
     fb = BeautifulSoup(content, "html.parser")
