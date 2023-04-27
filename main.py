@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 async def main():
     # 启动无头浏览器
+    await pyppeteer.chromium_downloader.download_chromium()
     browser = await pyppeteer.launch(headless=True)
     
     page = await browser.newPage()
