@@ -23,8 +23,7 @@ jobs:
           python -m pip install --upgrade requests
           pip install beautifulsoup4
           pip install pyppeteer
-          Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-          choco install chromium
+          sudo snap install chromium
       - name: '开始签到'
         env:
           52PjCookie: ${{ secrets.PjCookie }}
